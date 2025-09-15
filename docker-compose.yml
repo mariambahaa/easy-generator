@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: fs_auth_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: fs_auth_backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/app
+      - JWT_ACCESS_SECRET=dev_access_secret_change_me
+      - JWT_ACCESS_TTL=15m
+      - CORS_ORIGIN=http://localhost:8080
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build: ./frontend
+    container_name: fs_auth_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:3000
+
+volumes:
+  mongo_data:

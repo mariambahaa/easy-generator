@@ -1,0 +1,75 @@
+@font-face {
+  font-family: "Montserrat";
+  src: url("../assets/fonts/montserrat/Montserrat-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("../assets/fonts/montserrat/Montserrat-Italic-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --app-font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+
+  // Apply the global font to all base elements and Vuetify typography classes.
+  //
+  // The first rule ensures the font is applied to the main containers (html, body, etc.).
+  // The second rule targets Vuetify's utility classes that control typography (e.g., .text-h5, .text-caption).
+
+  font-family: var(--app-font-family);
+
+  [class^="text-"],
+  [class*=" text-"] {
+    font-family: var(--app-font-family);
+  }
+}
+
+body {
+  margin: 0;
+  &,
+  #app {
+    height: 100vh;
+  }
+
+  /* ---- Theme-aware background on the content area (no phantom scroll) ---- */
+
+  /* Light */
+  .v-theme--appLight .v-main {
+    background-color: #f3f4f6;
+    background-image: radial-gradient(
+        at 0% 0%,
+        hsla(211, 41%, 95%, 0.5) 0px,
+        transparent 50%
+      ),
+      radial-gradient(at 95% 15%, hsla(28, 63%, 92%, 0.4) 0px, transparent 50%),
+      radial-gradient(at 5% 95%, hsla(306, 47%, 94%, 0.5) 0px, transparent 50%);
+    /* no background-attachment: fixed; -> avoids layout overflow */
+  }
+
+  /* Dark */
+  .v-theme--appDark .v-main {
+    background-color: #0b0b0b;
+    background-image: radial-gradient(
+        at 0% 0%,
+        hsla(210, 20%, 25%, 0.35) 0px,
+        transparent 50%
+      ),
+      radial-gradient(at 95% 15%, hsla(28, 60%, 30%, 0.25) 0px, transparent 50%),
+      radial-gradient(at 5% 95%, hsla(300, 25%, 28%, 0.3) 0px, transparent 50%);
+  }
+
+  /* Defensive: prevent rare horizontal overflow from grid negatives */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
